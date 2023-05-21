@@ -1,0 +1,62 @@
+POST https://localhost:7185/api/voluntarios/
+Content-Type: application/json
+
+{
+  "nome": "Osmar Santos",
+  "cpf": "222.742.620-83",
+  "dataNascimento": "1982-02-19T16:09:37.739Z",
+  "escolaridade": "Ensino Fundamental Completo",
+  "genero": "Masculino",
+  "email": "osmarzin@teste.com",
+  "telefone": "79992299999",
+  "habilidade": "Garimpeiro",
+  "avaliacao": 5,
+  "horasVoluntaria": 0,
+  "quantidadeExperiencias": 0,
+  "endereco": {
+    "enderecoLinha": "Rua Serra Pelada",
+    "numero": 82,
+    "cep": "49045285",
+    "bairro": "Centro",
+    "cidade": "Palmas",
+    "estado": "Tocantins",
+    "pais": "Brasil",
+    "latitude": "0",
+    "longitude": "0"
+  }
+}
+###
+
+GET ongslivesbackend.azurewebsites.net/api/voluntarios/4
+
+###
+
+PUT https://localhost:7185/api/voluntarios/
+Content-Type: application/json
+
+{
+  "nome": "PEDRO PAULO SILVA FILHO",
+  "cpf": "612.742.620-83",
+  "dataNascimento": "2000-05-18T02:45:43.427",
+  "escolaridade": "Ensino Fundamental",
+  "genero": "Masculino",
+  "email": "paulo_silva_teste@gmail.com",
+  "telefone": "79999999999",
+  "habilidade": "Professor",
+  "avaliacao": 5,
+  "horasVoluntaria": 25,
+  "quantidadeExperiencias": 0,
+  "endereco": {
+    "enderecoLinha": "Rua do boi pedra",
+    "numero": 1225,
+    "cep": "49045285",
+    "bairro": "Centro",
+    "cidade": "Aracaju",
+    "estado": "Sergipe",
+    "pais": "Brasil",
+    "latitude": "0",
+    "longitude": "0"
+  },
+  "id": 7,
+  "actived": false
+}
