@@ -1,5 +1,3 @@
-using ONGLIVES.API.Entidades;
-using ONGLIVES.API.Interfaces.ServicosInfraestrutura;
 using ONGLIVES.API.Persistence.Context;
 using ONGLIVES.API.Repository;
 

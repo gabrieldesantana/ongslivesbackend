@@ -13,7 +13,7 @@ public class ExperienciaService : IExperienciaService
         _ongRepository = ongRepository;
     }
 
-    public async Task<Experiencia> Cadastrar(InputExperienciaModel inputExperienciaModel)
+    public async Task<Experiencia> CadastrarAsync(InputExperienciaModel inputExperienciaModel)
     {
         if (inputExperienciaModel == null)
             throw new Exception("Experiencia sem informacoes");
@@ -28,8 +28,8 @@ public class ExperienciaService : IExperienciaService
             throw new Exception("NomeOng não informado");
         }
 
-        var voluntario = await _voluntarioRepository.PegarPorNome(inputExperienciaModel.NomeVoluntario);
-        var ong = await _ongRepository.PegarPorNome(inputExperienciaModel.NomeOng);
+        var voluntario = await _voluntarioRepository.PegarPorNomeAsync(inputExperienciaModel.NomeVoluntario);
+        var ong = await _ongRepository.PegarPorNomeAsync(inputExperienciaModel.NomeOng);
 
         var experiencia = new Experiencia 
         (
@@ -44,17 +44,17 @@ public class ExperienciaService : IExperienciaService
         experiencia.IdOng = ong.Id;
         experiencia.IdVoluntario = voluntario.Id;
 
-        await _repository.Cadastrar(experiencia);
+        await _repository.CadastrarAsync(experiencia);
         return experiencia;
     }
 
-    public async Task<bool> Deletar(int id)
+    public async Task<bool> DeletarAsync(int id)
     {
-        await _repository.Deletar(id);
+        await _repository.DeletarAsync(id);
         return true;
     }
 
-    public async Task<Experiencia> Editar(EditExperienciaModel editExperienciaModel)
+    public async Task<Experiencia> EditarAsync(EditExperienciaModel editExperienciaModel)
     {
         var experienciaEdit = _repository.PegarPorId(editExperienciaModel.Id);
         
@@ -65,18 +65,18 @@ public class ExperienciaService : IExperienciaService
         experienciaEdit.ProjetoEnvolvido = editExperienciaModel.ProjetoEnvolvido;
         experienciaEdit.Opiniao = editExperienciaModel.Opiniao;
 
-        experienciaEdit = await _repository.Editar(experienciaEdit);
+        experienciaEdit = await _repository.EditarAsync(experienciaEdit);
 
         return experienciaEdit;
     }
 
-    public async Task<Experiencia> PegarPorId(int id)
+    public async Task<Experiencia> PegarPorIdAsync(int id)
     {
         return _repository.PegarPorId(id);
     }
 
-    public async Task<List<Experiencia>> PegarTodos()
+    public async Task<List<Experiencia>> PegarTodosAsync()
     {
-        return await _repository.PegarTodos();
+        return await _repository.PegarTodosAsync();
     }
 }

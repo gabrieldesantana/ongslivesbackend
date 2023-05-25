@@ -9,12 +9,12 @@ public class VoluntarioService : IVoluntarioService
         _repository = repository;
     }
 
-    public async Task<List<Voluntario>> PegarTodos()
+    public async Task<List<Voluntario>> PegarTodosAsync()
     {
-        return await _repository.PegarTodos();
+        return await _repository.PegarTodosAsync();
     }
 
-    public async Task<Voluntario> PegarPorId(int id)
+    public async Task<Voluntario> PegarPorIdAsync(int id)
     {
         var voluntario = _repository.PegarPorId(id);
 
@@ -24,7 +24,7 @@ public class VoluntarioService : IVoluntarioService
         return _repository.PegarPorId(id);
     }
 
-    public async Task<Voluntario> Cadastrar(InputVoluntarioModel inputVoluntarioModel)
+    public async Task<Voluntario> CadastrarAsync(InputVoluntarioModel inputVoluntarioModel)
     {
         if (inputVoluntarioModel == null)
             throw new Exception("Voluntario sem informacoes");
@@ -45,12 +45,12 @@ public class VoluntarioService : IVoluntarioService
         inputVoluntarioModel.Endereco
         );
 
-        await _repository.Cadastrar(voluntario);
+        await _repository.CadastrarAsync(voluntario);
         
         return voluntario;
     }
 
-    public async Task<Voluntario> Editar(EditVoluntarioModel editVoluntarioModel)
+    public async Task<Voluntario> EditarAsync(EditVoluntarioModel editVoluntarioModel)
     {
         var voluntarioEdit = _repository.PegarPorId(editVoluntarioModel.Id);
 
@@ -68,19 +68,19 @@ public class VoluntarioService : IVoluntarioService
         voluntarioEdit.Endereco = editVoluntarioModel.Endereco;
 
 
-        voluntarioEdit = await _repository.Editar(voluntarioEdit);
+        voluntarioEdit = await _repository.EditarAsync(voluntarioEdit);
 
         return voluntarioEdit;
     }
 
-    public async Task<bool> Deletar(int id)
+    public async Task<bool> DeletarAsync(int id)
     {
         var voluntario = _repository.PegarPorId(id);
 
         if (voluntario == null)
             return false;
             
-        await _repository.Deletar(id);
+        await _repository.DeletarAsync(id);
         return true;
     }
 }

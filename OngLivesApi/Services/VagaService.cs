@@ -8,7 +8,7 @@ public class VagaService : IVagaService
     {
         _repository = repository;
     }
-    public async Task<Vaga> Cadastrar(InputVagaModel inputVagaModel)
+    public async Task<Vaga> CadastrarAsync(InputVagaModel inputVagaModel)
     {
         if (inputVagaModel == null)
             throw new Exception("Vaga sem informações");
@@ -25,12 +25,12 @@ public class VagaService : IVagaService
         inputVagaModel.DataFim
         );
 
-        await _repository.Cadastrar(vaga);
+        await _repository.CadastrarAsync(vaga);
 
         return vaga;
     }
 
-    public async Task<Vaga> Editar(EditVagaModel editVagaModel)
+    public async Task<Vaga> EditarAsync(EditVagaModel editVagaModel)
     {
         var vagaEdit = _repository.PegarPorId(editVagaModel.Id);
         
@@ -45,17 +45,17 @@ public class VagaService : IVagaService
         vagaEdit.DataInicio = editVagaModel.DataInicio;
         vagaEdit.DataFim = editVagaModel.DataFim;
         
-        vagaEdit = await _repository.Editar(vagaEdit);
+        vagaEdit = await _repository.EditarAsync(vagaEdit);
 
         return vagaEdit;
     }
 
-    public async Task<List<Vaga>> PegarTodos()
+    public async Task<List<Vaga>> PegarTodosAsync()
     {
-        return await _repository.PegarTodos();
+        return await _repository.PegarTodosAsync();
     }
 
-    public async Task<Vaga> PegarPorId(int id)
+    public async Task<Vaga> PegarPorIdAsync(int id)
     {
         var vaga = _repository.PegarPorId(id);
 
@@ -65,14 +65,14 @@ public class VagaService : IVagaService
         return _repository.PegarPorId(id);
     }
 
-    public async Task<bool> Deletar(int id)
+    public async Task<bool> DeletarAsync(int id)
     {
         var vaga = _repository.PegarPorId(id);
 
         if (vaga == null)
             return false;
             
-        await _repository.Deletar(id);
+        await _repository.DeletarAsync(id);
         return true;
     }
 }

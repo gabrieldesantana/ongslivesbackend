@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using ONGLIVES.API.Entidades;
-using ONGLIVES.API.Persistence.Context;
 using ONGLIVESAPI.Interfaces;
 
 namespace ONGLIVES.API.Controllers;
 
 [ApiController]
-// [ApiVersion("1.0")]
-// [Route("api/v{version:apiVersion}/[controller]")]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
+//[Route("api/[controller]")]
 public class OngsController : ControllerBase
 {
     private readonly IOngService _service;
@@ -20,9 +19,9 @@ public class OngsController : ControllerBase
     [ProducesResponseType((200), Type = typeof(List<Voluntario>))]
     [ProducesResponseType((404))]
     [HttpGet("")]
-    public async Task<IActionResult> GetTodos()
+    public async Task<IActionResult> GetTodosAsync()
     {
-        var ongs = await _service.PegarTodos();
+        var ongs = await _service.PegarTodosAsync();
         return Ok(ongs);
     }
     
@@ -30,7 +29,7 @@ public class OngsController : ControllerBase
     [ProducesResponseType((200), Type = typeof(Voluntario))]
     [ProducesResponseType((404))]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetPorId(int id)
+    public async Task<IActionResult> GetPorIdAsync(int id)
     {
         var ong = _service.PegarPorId(id);
 
@@ -45,12 +44,12 @@ public class OngsController : ControllerBase
     [ProducesResponseType((400))]
     [ProducesResponseType((404))]
     [HttpPost("")]
-    public async Task<IActionResult> Post(InputOngModel inputOngModel)
+    public async Task<IActionResult> PostAsync(InputOngModel inputOngModel)
     {
         if (inputOngModel == null)
             return BadRequest();
         
-        await _service.Cadastrar(inputOngModel);
+        await _service.CadastrarAsync(inputOngModel);
 
         return Ok(inputOngModel);
     }
@@ -59,7 +58,7 @@ public class OngsController : ControllerBase
     [ProducesResponseType((400))]
     [ProducesResponseType((404))]
     [HttpPost("{id}/vagas")]
-    public async Task<IActionResult> PostVaga(int id, InputVagaOngModel inputVagaOngModel)
+    public async Task<IActionResult> PostVagaAsync(int id, InputVagaOngModel inputVagaOngModel)
     {
         var ong = _service.PegarPorId(id);
 
@@ -82,7 +81,7 @@ public class OngsController : ControllerBase
             return BadRequest();
 
         ong.AdicionarVaga(vaga);
-        await _service.AdicionarVaga(ong);
+        await _service.AdicionarVagaAsync(ong);
 
         return NoContent();
     }
@@ -91,7 +90,7 @@ public class OngsController : ControllerBase
     [ProducesResponseType((400))]
     [ProducesResponseType((404))]
     [HttpPost("{id}/financeiros")]
-    public async Task<IActionResult> PostFinanceiro(int id, InputOngFinanceiroModel inputOngFinanceiroModel)
+    public async Task<IActionResult> PostFinanceiroAsync(int id, InputOngFinanceiroModel inputOngFinanceiroModel)
     {
         var ong = _service.PegarPorId(id);
 
@@ -100,7 +99,7 @@ public class OngsController : ControllerBase
 
         var ongFinanceiro = new OngFinanceiro 
         (
-        inputOngFinanceiroModel.IdOng,
+        ong.Id,
         inputOngFinanceiroModel.Tipo,
         inputOngFinanceiroModel.Data,
         inputOngFinanceiroModel.Valor,
@@ -112,7 +111,7 @@ public class OngsController : ControllerBase
 
         ong.AdicionarFinanceiro(ongFinanceiro);
 
-        await _service.AdicionarFinanceiro(ong);
+        await _service.AdicionarFinanceiroAsync(ong);
 
         return NoContent();
     }
@@ -121,12 +120,12 @@ public class OngsController : ControllerBase
     [ProducesResponseType((200), Type = typeof(Voluntario))]
     [ProducesResponseType((404))]
     [HttpPut("")]
-    public async Task<IActionResult> Put(EditOngModel ong)
+    public async Task<IActionResult> PutAsync(EditOngModel ong)
     {
         if (ong == null)
             return BadRequest();
 
-        var OngEdit = await _service.Editar(ong);
+        var OngEdit = await _service.EditarAsync(ong);
 
         if (OngEdit == null)
             return BadRequest();
@@ -138,9 +137,9 @@ public class OngsController : ControllerBase
     [ProducesResponseType((200))]
     [ProducesResponseType((400))]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> DeleteAsync(int id)
     {
-        var ong = await _service.Deletar(id);
+        var ong = await _service.DeletarAsync(id);
         if (ong == false)
             return BadRequest();
             

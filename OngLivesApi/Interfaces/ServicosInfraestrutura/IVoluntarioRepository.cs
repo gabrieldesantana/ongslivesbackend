@@ -3,5 +3,5 @@ using ONGLIVES.API.Interfaces.ServicosInfraestrutura;
 
 public interface IVoluntarioRepository : IGenericRepository<Voluntario>
 {
-    public Task<Voluntario> PegarPorNome(string nome);
+    public Task<Voluntario> PegarPorNomeAsync(string nome);
 }

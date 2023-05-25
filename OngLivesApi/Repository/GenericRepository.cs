@@ -17,7 +17,7 @@ namespace ONGLIVES.API.Repository
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<T>> PegarTodos()
+        public async Task<List<T>> PegarTodosAsync()
         {
             return _dbSet
             .ToList()
@@ -29,7 +29,7 @@ namespace ONGLIVES.API.Repository
             return _dbSet.FirstOrDefault(x => x.Id == id);
         }
 
-        public async Task<T> Cadastrar(T entity)
+        public async Task<T> CadastrarAsync(T entity)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace ONGLIVES.API.Repository
             return entity;
         }
 
-        public async Task<T> Editar(T entity)
+        public async Task<T> EditarAsync(T entity)
         {
             var result = PegarPorId(entity.Id);
             if (result != null)
@@ -61,7 +61,7 @@ namespace ONGLIVES.API.Repository
             return entity;
         }
 
-        public async Task Deletar(int id)
+        public async Task DeletarAsync(int id)
         {
             var retorno = PegarPorId(id);
 

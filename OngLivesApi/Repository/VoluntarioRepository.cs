@@ -8,7 +8,7 @@ public class VoluntarioRepository : GenericRepository<Voluntario>,  IVoluntarioR
         : base (context, unitOfWork)
     {
     }
-    public async Task<Voluntario> PegarPorNome(string nome)
+    public async Task<Voluntario> PegarPorNomeAsync(string nome)
     {
         if (!string.IsNullOrWhiteSpace(nome))
         {

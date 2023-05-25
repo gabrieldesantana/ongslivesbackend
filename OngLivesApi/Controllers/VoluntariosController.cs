@@ -1,14 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using ONGLIVES.API.Entidades;
-using ONGLIVES.API.Persistence.Context;
 using ONGLIVESAPI.Interfaces;
 
 namespace ONGLIVES.API.Controllers;
 
 [ApiController]
-// [ApiVersion("1.0")]
-// [Route("api/v{version:apiVersion}/[controller]")]
-[Route("api/[controller]")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/[controller]")]
+//[Route("api/[controller]")]
 public class VoluntariosController : ControllerBase
 {
     private readonly IVoluntarioService _service;
@@ -20,18 +19,18 @@ public class VoluntariosController : ControllerBase
     [ProducesResponseType((200), Type = typeof(List<Voluntario>))]
     [ProducesResponseType((404))]
     [HttpGet("")]
-    public async Task<IActionResult> GetTodos()
+    public async Task<IActionResult> GetTodosAsync()
     {
-        var voluntarios = await _service.PegarTodos();
+        var voluntarios = await _service.PegarTodosAsync();
         return Ok(voluntarios);
     }
 
     [ProducesResponseType((200), Type = typeof(Voluntario))]
     [ProducesResponseType((404))]
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetPorId(int id) 
+    public async Task<IActionResult> GetPorIdAsync(int id) 
     {
-        var voluntario = await _service.PegarPorId(id);
+        var voluntario = await _service.PegarPorIdAsync(id);
 
         if (voluntario == null) 
             return NotFound();
@@ -43,12 +42,12 @@ public class VoluntariosController : ControllerBase
     [ProducesResponseType((400))]
     [ProducesResponseType((404))]
     [HttpPost("")]
-    public async Task<IActionResult> Post(InputVoluntarioModel inputVoluntarioModel)
+    public async Task<IActionResult> PostAsync(InputVoluntarioModel inputVoluntarioModel)
     {
         if (inputVoluntarioModel == null)
             return BadRequest();
 
-        await _service.Cadastrar(inputVoluntarioModel);
+        await _service.CadastrarAsync(inputVoluntarioModel);
 
         return Ok(inputVoluntarioModel);
     }
@@ -56,12 +55,12 @@ public class VoluntariosController : ControllerBase
     [ProducesResponseType((200), Type = typeof(EditVoluntarioModel))]
     [ProducesResponseType((404))]
     [HttpPut("")]
-    public async Task<IActionResult> Put(EditVoluntarioModel editVoluntarioModel)
+    public async Task<IActionResult> PutAsync(EditVoluntarioModel editVoluntarioModel)
     {
         if (editVoluntarioModel == null)
             return BadRequest();
 
-        var voluntarioEdit = await _service.Editar(editVoluntarioModel);
+        var voluntarioEdit = await _service.EditarAsync(editVoluntarioModel);
 
         if (voluntarioEdit == null)
             return BadRequest();
@@ -72,9 +71,9 @@ public class VoluntariosController : ControllerBase
     [ProducesResponseType((200))]
     [ProducesResponseType((400))]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> DeleteAsync(int id)
     {
-        var voluntario = await _service.Deletar(id);
+        var voluntario = await _service.DeletarAsync(id);
 
         if (voluntario == false)
             return BadRequest();

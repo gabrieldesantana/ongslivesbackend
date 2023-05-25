@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using ONGLIVES.API.Entidades;
 
 public class InputVagaOngModel 
 {

@@ -9,9 +9,9 @@ public class OngService : IOngService
         _repository = repository;
     }
 
-    public async Task<List<Ong>> PegarTodos()
+    public async Task<List<Ong>> PegarTodosAsync()
     {
-        return await _repository.PegarTodos();
+        return await _repository.PegarTodosAsync();
     }
 
     public Ong PegarPorId(int id)
@@ -24,7 +24,7 @@ public class OngService : IOngService
         return _repository.PegarPorId(id);
     }
 
-    public async Task<Ong> Cadastrar(InputOngModel inputOngModel)
+    public async Task<Ong> CadastrarAsync(InputOngModel inputOngModel)
     {
         if (inputOngModel == null)
             throw new Exception("Ong sem informações");
@@ -40,11 +40,11 @@ public class OngService : IOngService
         inputOngModel.Endereco
         );
 
-        await _repository.Cadastrar(ong);
+        await _repository.CadastrarAsync(ong);
         return ong;
     }
     
-    public async Task AdicionarVaga(Ong ong)
+    public async Task AdicionarVagaAsync(Ong ong)
     {
         if (ong == null)
             throw new Exception("Vaga sem informações");
@@ -52,7 +52,7 @@ public class OngService : IOngService
         _repository.AdicionarVaga(ong);
     }
 
-    public async Task AdicionarFinanceiro(Ong ong)
+    public async Task AdicionarFinanceiroAsync(Ong ong)
     {
         if (ong == null)
             throw new Exception("Financeiro sem informações");
@@ -60,7 +60,7 @@ public class OngService : IOngService
         _repository.AdicionarFinanceiro(ong);
     }
 
-    public async Task<Ong> Editar(EditOngModel editOngModel)
+    public async Task<Ong> EditarAsync(EditOngModel editOngModel)
     {
         var ongEdit = _repository.PegarPorId(editOngModel.Id);
 
@@ -73,19 +73,19 @@ public class OngService : IOngService
         ongEdit.QuantidadeEmpregados = editOngModel.QuantidadeEmpregados;
         ongEdit.Endereco = editOngModel.Endereco;
 
-        ongEdit = await _repository.Editar(ongEdit);
+        ongEdit = await _repository.EditarAsync(ongEdit);
 
         return ongEdit;
     }
 
-    public async Task<bool> Deletar(int id)
+    public async Task<bool> DeletarAsync(int id)
     {
         var voluntario = _repository.PegarPorId(id);
 
         if (voluntario == null)
             return false;
             
-        await _repository.Deletar(id);
+        await _repository.DeletarAsync(id);
         return true;
     }
 }

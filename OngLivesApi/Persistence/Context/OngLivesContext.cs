@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ONGLIVES.API.Entidades;
-namespace ONGLIVES.API.Persistence.Context 
+namespace ONGLIVES.API.Persistence.Context
 {
     public class OngLivesContext : DbContext
     {

@@ -10,7 +10,7 @@ public class OngRepository : GenericRepository<Ong>, IOngRepository
     {
     }
 
-    public async Task<Ong> PegarPorNome(string nome)
+    public async Task<Ong> PegarPorNomeAsync(string nome)
     {
         if (!string.IsNullOrWhiteSpace(nome))
         {
