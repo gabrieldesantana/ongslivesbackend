@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ONGLIVES.API.Persistence.Context;
 
@@ -11,9 +12,11 @@ using ONGLIVES.API.Persistence.Context;
 namespace ONGLIVES.API.Persistence.Migrations
 {
     [DbContext(typeof(OngLivesContext))]
-    partial class OngLivesContextModelSnapshot : ModelSnapshot
+    [Migration("20230526015043_AddUserColumn")]
+    partial class AddUserColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +62,7 @@ namespace ONGLIVES.API.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TB_Enderecos");
+                    b.ToTable("Endereco");
                 });
 
             modelBuilder.Entity("ONGLIVES.API.Entidades.Experiencia", b =>
@@ -115,7 +118,7 @@ namespace ONGLIVES.API.Persistence.Migrations
 
                     b.HasIndex("VoluntarioId");
 
-                    b.ToTable("TB_Experiencias");
+                    b.ToTable("Experiencias");
                 });
 
             modelBuilder.Entity("ONGLIVES.API.Entidades.Ong", b =>
@@ -157,46 +160,7 @@ namespace ONGLIVES.API.Persistence.Migrations
 
                     b.HasIndex("EnderecoId");
 
-                    b.ToTable("TB_Ongs");
-                });
-
-            modelBuilder.Entity("ONGLIVES.API.Entidades.OngFinanceiro", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("Actived")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Data")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("IdOng")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("OngId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Origem")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Tipo")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Valor")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OngId");
-
-                    b.ToTable("TB_OngFinanceiros");
+                    b.ToTable("Ongs");
                 });
 
             modelBuilder.Entity("ONGLIVES.API.Entidades.Usuario", b =>
@@ -287,7 +251,7 @@ namespace ONGLIVES.API.Persistence.Migrations
 
                     b.HasIndex("VoluntarioId");
 
-                    b.ToTable("TB_Vagas");
+                    b.ToTable("Vagas");
                 });
 
             modelBuilder.Entity("ONGLIVES.API.Entidades.Voluntario", b =>
@@ -344,7 +308,46 @@ namespace ONGLIVES.API.Persistence.Migrations
 
                     b.HasIndex("EnderecoId");
 
-                    b.ToTable("TB_Voluntarios");
+                    b.ToTable("Voluntarios");
+                });
+
+            modelBuilder.Entity("OngFinanceiro", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Actived")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdOng")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OngId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Origem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tipo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Valor")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OngId");
+
+                    b.ToTable("OngFinanceiros");
                 });
 
             modelBuilder.Entity("ONGLIVES.API.Entidades.Experiencia", b =>
@@ -371,13 +374,6 @@ namespace ONGLIVES.API.Persistence.Migrations
                     b.Navigation("Endereco");
                 });
 
-            modelBuilder.Entity("ONGLIVES.API.Entidades.OngFinanceiro", b =>
-                {
-                    b.HasOne("ONGLIVES.API.Entidades.Ong", null)
-                        .WithMany("Financeiros")
-                        .HasForeignKey("OngId");
-                });
-
             modelBuilder.Entity("ONGLIVES.API.Entidades.Vaga", b =>
                 {
                     b.HasOne("ONGLIVES.API.Entidades.Ong", "Ong")
@@ -400,6 +396,13 @@ namespace ONGLIVES.API.Persistence.Migrations
                         .HasForeignKey("EnderecoId");
 
                     b.Navigation("Endereco");
+                });
+
+            modelBuilder.Entity("OngFinanceiro", b =>
+                {
+                    b.HasOne("ONGLIVES.API.Entidades.Ong", null)
+                        .WithMany("Financeiros")
+                        .HasForeignKey("OngId");
                 });
 
             modelBuilder.Entity("ONGLIVES.API.Entidades.Ong", b =>

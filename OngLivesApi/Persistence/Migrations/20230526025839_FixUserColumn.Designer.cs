@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ONGLIVES.API.Persistence.Context;
 
@@ -11,9 +12,11 @@ using ONGLIVES.API.Persistence.Context;
 namespace ONGLIVES.API.Persistence.Migrations
 {
     [DbContext(typeof(OngLivesContext))]
-    partial class OngLivesContextModelSnapshot : ModelSnapshot
+    [Migration("20230526025839_FixUserColumn")]
+    partial class FixUserColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
