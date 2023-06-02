@@ -1,5 +1,6 @@
 using ONGLIVES.API.Persistence.Context;
 using ONGLIVES.API.Repository;
+using ONGLIVES.API.Entidades;
 
 public class OngFinanceiroRepository : GenericRepository<OngFinanceiro>, IOngFinanceiroRepository
 {

@@ -8,4 +8,8 @@ public class VagaRepository : GenericRepository<Vaga>, IVagaRepository
     : base(context, unitOfWork)
     {
     }
+        public async Task<List<Vaga>> PegarVagasAsync(int idOng)
+        {
+            return  _context.Vagas.ToList().FindAll(x => x.IdOng == idOng);
+        }
 }

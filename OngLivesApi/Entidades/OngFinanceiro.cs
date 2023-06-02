@@ -1,6 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using ONGLIVES.API.Entidades;
 
+namespace ONGLIVES.API.Entidades;
+[Table("TB_OngFinanceiros")]
 public class OngFinanceiro : Base
 {
     public OngFinanceiro()

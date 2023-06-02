@@ -14,6 +14,6 @@ public class UnitOfWork : IUnitOfWork
     }
     public void Rollback()
     {
-        
+        _context.Dispose();
     }
 }

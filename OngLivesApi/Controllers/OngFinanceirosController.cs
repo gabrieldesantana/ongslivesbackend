@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
-using ONGLIVESAPI.Interfaces;
+using ONGLIVES.API.Interfaces;
+using ONGLIVES.API.Entidades;
 
 namespace ONGLIVES.API.Controllers;
 
 [ApiController]
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/[controller]")]
-//[Route("api/[controller]")]
 public class OngFinanceirosController : ControllerBase
 {
     private readonly IOngFinanceiroService _service;
@@ -39,13 +39,13 @@ public class OngFinanceirosController : ControllerBase
 
     [ProducesResponseType((200), Type = typeof(EditOngFinanceiroModel))]
     [ProducesResponseType((404))]
-    [HttpPut("")]
-    public async Task<IActionResult> PutAsync(EditOngFinanceiroModel ongFinanceiro)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutAsync(int id, EditOngFinanceiroModel ongFinanceiro)
     {
         if (ongFinanceiro == null)
             return BadRequest();
 
-        var ongFinanceiroEdit = await _service.EditarAsync(ongFinanceiro);
+        var ongFinanceiroEdit = await _service.EditarAsync(id, ongFinanceiro);
 
         if (ongFinanceiroEdit == null)
             return BadRequest();

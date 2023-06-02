@@ -6,6 +6,7 @@ public class InputExperienciaModel
         public string? NomeOng { get; set; }
         public string? ProjetoEnvolvido { get; set; }
         public string? Opiniao { get; set; }
+        public int Nota { get; set; }
         public DateTime DataExperienciaInicio{ get; set; }
         public DateTime DataExperienciaFim { get; set; }
 }

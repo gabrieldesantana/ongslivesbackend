@@ -12,16 +12,36 @@ public class VoluntarioRepository : GenericRepository<Voluntario>,  IVoluntarioR
     {
         if (!string.IsNullOrWhiteSpace(nome))
         {
-            return _context.Voluntarios.FirstOrDefault(x => x.Nome.Contains(nome));
+            return await _context.Voluntarios.FirstOrDefaultAsync(x => x.Nome.ToUpper().Contains(nome.ToUpper()));
         }   
         return null;
     }
 
-    public override Voluntario PegarPorId(int id)
+    public async Task<Voluntario> PegarPorEmailAsync(string email)
     {
-        return _dbSet
-        .Include(x => x.Endereco)
-        .FirstOrDefault(x => x.Id == id);
+        return await _context.Voluntarios
+        .FirstOrDefaultAsync(x => x.Email.ToUpper() == email.ToUpper());
     }
+
+    public override async Task<Voluntario> PegarPorIdAsync(int id)
+    {
+        var voluntario = await _dbSet
+        .Include(x => x.Endereco)
+        .FirstOrDefaultAsync(x => x.Id == id);
+        return voluntario;
+    }
+
+    // public void AdicionarPropriedade(Voluntario voluntario)
+    // {
+    //     try
+    //     {
+    //         _context.Entry(voluntario).State = EntityState.Modified;
+    //         _unitOfWork.Commit();
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         _unitOfWork.Rollback();
+    //     }
+    // }
 
 }

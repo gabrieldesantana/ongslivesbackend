@@ -14,6 +14,7 @@ namespace ONGLIVES.API.Persistence.Context
         public DbSet<Experiencia> Experiencias { get; set; }
         public DbSet<OngFinanceiro> OngFinanceiros { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Imagem> TB_Imagens {get; set;}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

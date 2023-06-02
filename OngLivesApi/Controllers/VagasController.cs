@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ONGLIVES.API.Entidades;
-using ONGLIVESAPI.Interfaces;
+using ONGLIVES.API.Interfaces;
 
 namespace ONGLIVES.API.Controllers;
 
@@ -54,13 +54,13 @@ public class VagasController : ControllerBase
 
     [ProducesResponseType((200), Type= typeof(Vaga))]
     [ProducesResponseType((404))]
-    [HttpPut("")]
-    public async Task<IActionResult> PutAsync(EditVagaModel vaga)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutAsync(int id, EditVagaModel vaga)
     {
         if (vaga == null)
             return BadRequest();
 
-        var vagaEdit = await _service.EditarAsync(vaga);
+        var vagaEdit = await _service.EditarAsync(id, vaga);
 
         if (vagaEdit == null)
             return BadRequest();

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ONGLIVES.API.Entidades;
-using ONGLIVESAPI.Interfaces;
+using ONGLIVES.API.Interfaces;
 
 namespace ONGLIVES.API.Controllers;
 
@@ -31,9 +31,22 @@ public class OngsController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetPorIdAsync(int id)
     {
-        var ong = _service.PegarPorId(id);
+        var ong = await _service.PegarPorIdAsync(id);
 
         if (ong == null)
+            return NotFound();
+
+        return Ok(ong);
+    }
+
+    [ProducesResponseType((200), Type = typeof(Usuario))]
+    [ProducesResponseType((404))]
+    [HttpGet("email/{email}")]
+    public async Task<IActionResult> GetPorEmailAsync(string email) 
+    {
+        var ong = await _service.PegarPorEmailAsync(email);
+
+        if (ong == null) 
             return NotFound();
 
         return Ok(ong);
@@ -60,7 +73,7 @@ public class OngsController : ControllerBase
     [HttpPost("{id}/vagas")]
     public async Task<IActionResult> PostVagaAsync(int id, InputVagaOngModel inputVagaOngModel)
     {
-        var ong = _service.PegarPorId(id);
+        var ong = await _service.PegarPorIdAsync(id);
 
         if (ong == null)
             return NotFound();
@@ -92,7 +105,7 @@ public class OngsController : ControllerBase
     [HttpPost("{id}/financeiros")]
     public async Task<IActionResult> PostFinanceiroAsync(int id, InputOngFinanceiroModel inputOngFinanceiroModel)
     {
-        var ong = _service.PegarPorId(id);
+        var ong = await _service.PegarPorIdAsync(id);
 
         if (ong == null)
             return NotFound();
@@ -116,16 +129,44 @@ public class OngsController : ControllerBase
         return NoContent();
     }
 
+    // [ProducesResponseType((201), Type = typeof(Imagem))]
+    // [ProducesResponseType((400))]
+    // [ProducesResponseType((404))]
+    // [HttpPost("{id}/foto")]
+    // public async Task<IActionResult> PostFotoAsync(int id, InputImagemModel inputImagemModel)
+    // {
+    //     var ong = await _service.PegarPorIdAsync(id);
+
+    //     if (ong == null)
+    //         return NotFound();
+
+    //     var imagem = new Imagem 
+    //     (
+    //     ong.Id,
+    //     inputImagemModel.Nome,
+    //     inputImagemModel.Conteudo
+    //     );
+
+    //     if (imagem == null)
+    //         return BadRequest();
+
+    //     ong.AdicionarFoto(imagem);
+
+    //     await _service.AdicionarFotoAsync(ong);
+
+    //     return NoContent();
+    // }
+
 
     [ProducesResponseType((200), Type = typeof(Voluntario))]
     [ProducesResponseType((404))]
-    [HttpPut("")]
-    public async Task<IActionResult> PutAsync(EditOngModel ong)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutAsync(int id, EditOngModel ong)
     {
         if (ong == null)
             return BadRequest();
 
-        var OngEdit = await _service.EditarAsync(ong);
+        var OngEdit = await _service.EditarAsync(id, ong);
 
         if (OngEdit == null)
             return BadRequest();

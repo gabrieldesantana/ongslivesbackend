@@ -16,6 +16,7 @@ public class OngFinanceiroConfiguration : IEntityTypeConfiguration<OngFinanceiro
 
         builder.Property(e => e.Tipo)
         .HasColumnName("Tipo")
+        .IsRequired()
         .HasColumnType("nvarchar(50)");
 
         builder.Property(e => e.Data)
@@ -30,6 +31,7 @@ public class OngFinanceiroConfiguration : IEntityTypeConfiguration<OngFinanceiro
 
         builder.Property(e => e.Origem)
         .HasColumnName("Origem")
+        .IsRequired()
         .HasColumnType("nvarchar(100)");
 
         builder.Property(e => e.CriadoEm)

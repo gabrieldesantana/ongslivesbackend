@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace ONGLIVES.API.Entidades
 {
+    [Table("TB_Ongs")]
     public class Ong : Base
     {
         public Ong()
@@ -25,15 +27,20 @@ namespace ONGLIVES.API.Entidades
             QuantidadeEmpregados = quantidadeEmpregados;
             Vagas = new List<Vaga>();
             Financeiros = new List<OngFinanceiro>();
+            // Imagem = new Imagem();
             Endereco = endereco;
             CriadoEm = DateTime.Now;
         }
 
         public void AdicionarVaga(Vaga vaga)
         {
-
             Vagas.Add(vaga);
         }
+
+        // public void AdicionarFoto(Imagem imagem)
+        // {
+        //     Imagem = imagem;
+        // }
 
         public void AdicionarFinanceiro(OngFinanceiro ongFinanceiro)
         {
@@ -48,6 +55,7 @@ namespace ONGLIVES.API.Entidades
         public int QuantidadeEmpregados { get; set; }
         public List<Vaga>? Vagas { get; set; }
         public List<OngFinanceiro> Financeiros { get; set; }
+        // public Imagem Imagem { get; set; }
         public Endereco? Endereco { get; set; }
         [JsonIgnore]
         public DateTime CriadoEm { get; set; }

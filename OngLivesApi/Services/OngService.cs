@@ -1,12 +1,14 @@
 using ONGLIVES.API.Entidades;
-using ONGLIVESAPI.Interfaces;
+using ONGLIVES.API.Interfaces;
 
 public class OngService : IOngService
 {
     private readonly IOngRepository _repository;
-    public OngService(IOngRepository repository)
+    private readonly IVagaRepository _vagaRepository;
+    public OngService(IOngRepository repository, IVagaRepository vagaRepository)
     {
         _repository = repository;
+        _vagaRepository = vagaRepository;
     }
 
     public async Task<List<Ong>> PegarTodosAsync()
@@ -14,14 +16,28 @@ public class OngService : IOngService
         return await _repository.PegarTodosAsync();
     }
 
-    public Ong PegarPorId(int id)
+    public async Task<Ong> PegarPorIdAsync(int id)
     {
-        var ong = _repository.PegarPorId(id);
+        var ong = await _repository.PegarPorIdAsync(id);
 
-        if (ong == null)
-            return null;
+        var vagas = await _vagaRepository.PegarVagasAsync(ong.Id); //
+        ong.Vagas = vagas; //
 
-        return _repository.PegarPorId(id);
+        if (ong == null) return null;
+
+        return ong;
+    }
+
+    public async Task<Ong> PegarPorEmailAsync(string email)
+    {
+        var ong = await _repository.PegarPorEmailAsync(email);
+
+        var vagas = await _vagaRepository.PegarVagasAsync(ong.Id);
+        ong.Vagas = vagas;
+
+        if (ong == null) return null;
+
+        return ong;
     }
 
     public async Task<Ong> CadastrarAsync(InputOngModel inputOngModel)
@@ -49,7 +65,8 @@ public class OngService : IOngService
         if (ong == null)
             throw new Exception("Vaga sem informações");
         
-        _repository.AdicionarVaga(ong);
+        // _repository.AdicionarVaga(ong);
+        _repository.AdicionarPropriedadeAsync(ong);
     }
 
     public async Task AdicionarFinanceiroAsync(Ong ong)
@@ -57,15 +74,26 @@ public class OngService : IOngService
         if (ong == null)
             throw new Exception("Financeiro sem informações");
         
-        _repository.AdicionarFinanceiro(ong);
+        // _repository.AdicionarFinanceiro(ong);
+        _repository.AdicionarPropriedadeAsync(ong);
     }
 
-    public async Task<Ong> EditarAsync(EditOngModel editOngModel)
+    public async Task AdicionarFotoAsync(Ong ong)
     {
-        var ongEdit = _repository.PegarPorId(editOngModel.Id);
+        if (ong == null)
+            throw new Exception("Foto sem informações");
+        
+        // _repository.AdicionarFinanceiro(ong);
+        _repository.AdicionarPropriedadeAsync(ong);
+    }
 
-        if (ongEdit == null)
-            return null;
+
+
+    public async Task<Ong> EditarAsync(int id, EditOngModel editOngModel)
+    {
+        var ongEdit = await _repository.PegarPorIdAsync(editOngModel.Id);
+
+        if (ongEdit == null) return null;
 
         ongEdit.Id = editOngModel.Id;
         ongEdit.Telefone = editOngModel.Telefone;
@@ -80,10 +108,9 @@ public class OngService : IOngService
 
     public async Task<bool> DeletarAsync(int id)
     {
-        var voluntario = _repository.PegarPorId(id);
+        var voluntario = await _repository.PegarPorIdAsync(id);
 
-        if (voluntario == null)
-            return false;
+        if (voluntario == null) return false;
             
         await _repository.DeletarAsync(id);
         return true;

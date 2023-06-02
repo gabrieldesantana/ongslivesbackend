@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace ONGLIVES.API.Entidades
 {
+    [Table("TB_Enderecos")]
     public class Endereco
     {
         public Endereco()
@@ -17,7 +19,7 @@ namespace ONGLIVES.API.Entidades
         public string? Cidade { get; set; }
         public string? Estado { get; set; }
         public string? Pais { get; set; }
-        public string? Latitude { get; set; }
-        public string? Longitude { get; set; }
+        public string? Latitude { get; set; } = "0";
+        public string? Longitude { get; set; } = "0";
     }
 }

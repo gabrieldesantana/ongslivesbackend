@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ONGLIVES.API.Entidades;
-using ONGLIVESAPI.Interfaces;
+using ONGLIVES.API.Interfaces;
 
 namespace ONGLIVES.API.Controllers;
 
@@ -55,13 +55,13 @@ public class ExperienciasController : ControllerBase
 
     [ProducesResponseType((200), Type = typeof(EditExperienciaModel))]
     [ProducesResponseType((404))]
-    [HttpPut("")]
-    public async Task<IActionResult> PutAsync(EditExperienciaModel editExperienciaModel)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutAsync(int id, EditExperienciaModel editExperienciaModel)
     {
         if (editExperienciaModel == null)
             return BadRequest();
 
-        var experienciaEdit = await _service.EditarAsync(editExperienciaModel);
+        var experienciaEdit = await _service.EditarAsync(id, editExperienciaModel);
 
         if (experienciaEdit == null)
             return BadRequest();

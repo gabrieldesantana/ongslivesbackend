@@ -17,18 +17,18 @@ namespace ONGLIVES.API.Repository
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<List<T>> PegarTodosAsync()
+        public virtual async Task<List<T>> PegarTodosAsync()
         {
             return _dbSet
             .ToList()
             .FindAll(x => x.Actived == true);
         }
 
-        public virtual T PegarPorId(int id)
+        public virtual async Task<T> PegarPorIdAsync(int id)
         {
-            return _dbSet.FirstOrDefault(x => x.Id == id);
+            var entity =  await _dbSet.FirstOrDefaultAsync(x => x.Id == id);
+            return entity;
         }
-
         public async Task<T> CadastrarAsync(T entity)
         {
             try
@@ -45,7 +45,7 @@ namespace ONGLIVES.API.Repository
 
         public async Task<T> EditarAsync(T entity)
         {
-            var result = PegarPorId(entity.Id);
+            var result = await PegarPorIdAsync(entity.Id);
             if (result != null)
             {
                 try
@@ -63,7 +63,7 @@ namespace ONGLIVES.API.Repository
 
         public async Task DeletarAsync(int id)
         {
-            var retorno = PegarPorId(id);
+            var retorno = await PegarPorIdAsync(id);
 
             if (retorno != null) 
             {
@@ -83,6 +83,19 @@ namespace ONGLIVES.API.Repository
         public bool Exists(int id)
         {
             return _dbSet.Any(x => x.Id.Equals(id));
+        }
+
+        public async Task AdicionarPropriedadeAsync(T entity)
+        {
+            try
+            {
+                _context.Entry(entity).State = EntityState.Modified;
+                _unitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                _unitOfWork.Rollback();
+            }
         }
     }
 }

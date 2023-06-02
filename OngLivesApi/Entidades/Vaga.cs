@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace ONGLIVES.API.Entidades
 {
+    [Table("TB_Vagas")]
     public class Vaga : Base
     {
         public Vaga()
@@ -23,6 +25,7 @@ namespace ONGLIVES.API.Entidades
             Turno = turno;
             Descricao = descricao;
             Habilidade = habilidade;
+            Disponivel = true;
             DataInicio = dataInicio;
             DataFim = dataFim;
             CriadoEm = DateTime.Now;
@@ -38,6 +41,9 @@ namespace ONGLIVES.API.Entidades
         public string? Turno { get; set; }
         public string? Descricao { get; set; }
         public string? Habilidade { get; set; }
+
+        public bool Disponivel { get; set; }
+
         public DateTime DataInicio { get; set; }
         public DateTime DataFim { get; set; }
         [JsonIgnore]

@@ -11,10 +11,12 @@ public class VoluntarioConfiguration : IEntityTypeConfiguration<Voluntario>
 
         builder.Property(e => e.Nome)
         .HasColumnName("Nome")
+        .IsRequired()
         .HasColumnType("nvarchar(100)");
 
         builder.Property(e => e.CPF)
         .HasColumnName("CPF")
+        .IsRequired()
         .HasColumnType("nvarchar(14)");
 
         builder.Property(p => p.DataNascimento)
@@ -31,8 +33,8 @@ public class VoluntarioConfiguration : IEntityTypeConfiguration<Voluntario>
         .HasColumnType("nvarchar(20)");
 
         builder.Property(p => p.Email)
-        .IsRequired()
         .HasColumnName("Email")
+        .IsRequired()
         .HasColumnType("nvarchar(100)");
 
         builder.Property(p => p.Telefone)
@@ -40,11 +42,9 @@ public class VoluntarioConfiguration : IEntityTypeConfiguration<Voluntario>
         .HasColumnName("Telefone")
         .HasColumnType("nvarchar(14)");
 
-        builder.Property(p => p.Habilidade)
-        .IsRequired();
-
         builder.Property(e => e.Habilidade)
         .HasColumnName("Habilidade")
+        .IsRequired()
         .HasColumnType("nvarchar(max)");
 
         builder.Property(e => e.Avaliacao)
@@ -59,11 +59,21 @@ public class VoluntarioConfiguration : IEntityTypeConfiguration<Voluntario>
         .HasColumnName("QuantidadeExperiencias")
         .HasColumnType("int");
 
+        // builder.Property(p => p.Imagem.Id)
+        // .HasColumnName("ImagemId")
+        // .IsRequired()
+        // .HasColumnType("int");
+
         builder.Property(e => e.CriadoEm)
         .HasColumnName("CriadoEm")
         .IsRequired()
         .HasColumnType("datetime")
         .HasDefaultValueSql("GETDATE()");
+
+        // builder.HasOne(p => p.Imagem)
+        // .WithOne()
+        // .HasForeignKey<Imagem>(p => p.Id)
+        // .IsRequired();
 
         builder.HasOne(e => e.Endereco)
         .WithOne()

@@ -44,6 +44,11 @@ public class OngConfiguration : IEntityTypeConfiguration<Ong>
         .IsRequired()
         .HasColumnType("int");
 
+        // builder.Property(p => p.Imagem.Id)
+        // .HasColumnName("ImagemId")
+        // .IsRequired()
+        // .HasColumnType("int");
+
         builder.Property(e => e.CriadoEm)
         .HasColumnName("CriadoEm")
         .IsRequired()
@@ -59,6 +64,11 @@ public class OngConfiguration : IEntityTypeConfiguration<Ong>
         .WithOne()
         .HasForeignKey<Endereco>(p => p.Id)
         .IsRequired();
+
+        // builder.HasOne(p => p.Imagem)
+        // .WithOne()
+        // .HasForeignKey<Imagem>(p => p.Id)
+        // .IsRequired();
 
         builder.HasMany(p => p.Vagas)
         .WithOne()

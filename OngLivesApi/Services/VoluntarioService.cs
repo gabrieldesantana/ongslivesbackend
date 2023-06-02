@@ -1,5 +1,5 @@
 using ONGLIVES.API.Entidades;
-using ONGLIVESAPI.Interfaces;
+using ONGLIVES.API.Interfaces;
 
 public class VoluntarioService : IVoluntarioService
 {
@@ -16,12 +16,20 @@ public class VoluntarioService : IVoluntarioService
 
     public async Task<Voluntario> PegarPorIdAsync(int id)
     {
-        var voluntario = _repository.PegarPorId(id);
+        var voluntario = await _repository.PegarPorIdAsync(id);
 
-        if (voluntario == null)
-            return null;
+        if (voluntario == null) return null;
 
-        return _repository.PegarPorId(id);
+        return voluntario;
+    }
+
+    public async Task<Voluntario> PegarPorEmailAsync(string email)
+    {
+        var voluntario = await _repository.PegarPorEmailAsync(email);
+
+        if (voluntario == null) return null;
+
+        return voluntario;
     }
 
     public async Task<Voluntario> CadastrarAsync(InputVoluntarioModel inputVoluntarioModel)
@@ -39,9 +47,6 @@ public class VoluntarioService : IVoluntarioService
         inputVoluntarioModel.Email,
         inputVoluntarioModel.Telefone,
         inputVoluntarioModel.Habilidade,
-        inputVoluntarioModel.Avaliacao,
-        inputVoluntarioModel.HorasVoluntaria,
-        inputVoluntarioModel.QuantidadeExperiencias,
         inputVoluntarioModel.Endereco
         );
 
@@ -50,14 +55,22 @@ public class VoluntarioService : IVoluntarioService
         return voluntario;
     }
 
-    public async Task<Voluntario> EditarAsync(EditVoluntarioModel editVoluntarioModel)
+    public async Task AdicionarFotoAsync(Voluntario voluntario)
     {
-        var voluntarioEdit = _repository.PegarPorId(editVoluntarioModel.Id);
+         if (voluntario == null)
+            throw new Exception("Foto sem informações");
+        
+        // _repository.AdicionarVaga(ong);
+        _repository.AdicionarPropriedadeAsync(voluntario);
+    }
 
-        if (voluntarioEdit == null)
-            return null;
+    public async Task<Voluntario> EditarAsync(int id, EditVoluntarioModel editVoluntarioModel)
+    {
+        var voluntarioEdit = await _repository.PegarPorIdAsync(id);
 
-        voluntarioEdit.Id = editVoluntarioModel.Id;
+        if (voluntarioEdit == null) return null;
+
+        voluntarioEdit.Id = id;
         voluntarioEdit.Escolaridade = editVoluntarioModel.Escolaridade;
         voluntarioEdit.Email = editVoluntarioModel.Email;
         voluntarioEdit.Telefone = editVoluntarioModel.Telefone;
@@ -75,10 +88,9 @@ public class VoluntarioService : IVoluntarioService
 
     public async Task<bool> DeletarAsync(int id)
     {
-        var voluntario = _repository.PegarPorId(id);
+        var voluntario = await _repository.PegarPorIdAsync(id);
 
-        if (voluntario == null)
-            return false;
+        if (voluntario == null) return false;
             
         await _repository.DeletarAsync(id);
         return true;

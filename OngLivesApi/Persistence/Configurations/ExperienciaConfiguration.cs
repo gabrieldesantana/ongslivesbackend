@@ -33,11 +33,17 @@ public class ExperienciaConfiguration : IEntityTypeConfiguration<Experiencia>
 
         builder.Property(e => e.ProjetoEnvolvido)
         .HasColumnName("ProjetoEnvolvido")
+        .IsRequired()
         .HasColumnType("nvarchar(max)");
 
         builder.Property(p => p.Opiniao)
         .HasColumnName("ProjetoEnvolvido")
+        .IsRequired()
         .HasColumnType("nvarchar(max)");
+
+        builder.Property(p => p.Nota)
+        .HasColumnName("Nota")
+        .HasColumnType("int");
 
         builder.Property(p => p.DataPostagem)
         .HasColumnName("DataPostagem")

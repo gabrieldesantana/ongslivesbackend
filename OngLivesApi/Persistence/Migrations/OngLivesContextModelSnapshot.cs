@@ -97,6 +97,9 @@ namespace ONGLIVES.API.Persistence.Migrations
                     b.Property<string>("NomeVoluntario")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Nota")
+                        .HasColumnType("int");
+
                     b.Property<int?>("OngId")
                         .HasColumnType("int");
 
@@ -116,6 +119,34 @@ namespace ONGLIVES.API.Persistence.Migrations
                     b.HasIndex("VoluntarioId");
 
                     b.ToTable("TB_Experiencias");
+                });
+
+            modelBuilder.Entity("ONGLIVES.API.Entidades.Imagem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Actived")
+                        .HasColumnType("bit");
+
+                    b.Property<byte[]>("Conteudo")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdDono")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TB_Imagens");
                 });
 
             modelBuilder.Entity("ONGLIVES.API.Entidades.Ong", b =>
@@ -210,26 +241,22 @@ namespace ONGLIVES.API.Persistence.Migrations
                     b.Property<bool>("Actived")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime>("CriadoEm")
+                    b.Property<DateTime?>("CriadoEm")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Login")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Perfil")
+                    b.Property<int?>("Perfil")
                         .HasColumnType("int");
 
                     b.Property<string>("Senha")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -259,6 +286,9 @@ namespace ONGLIVES.API.Persistence.Migrations
 
                     b.Property<string>("Descricao")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Disponivel")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Habilidade")
                         .HasColumnType("nvarchar(max)");

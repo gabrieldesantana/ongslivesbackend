@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using ONGLIVES.API.Entidades;
-using ONGLIVESAPI.Interfaces;
+using ONGLIVES.API.Interfaces;
 
 namespace ONGLIVES.API.Controllers;
 
@@ -38,6 +38,19 @@ public class VoluntariosController : ControllerBase
         return Ok(voluntario);
     }
 
+    [ProducesResponseType((200), Type = typeof(Usuario))]
+    [ProducesResponseType((404))]
+    [HttpGet("email/{email}")]
+    public async Task<IActionResult> GetPorEmailAsync(string email) 
+    {
+        var voluntario = await _service.PegarPorEmailAsync(email);
+
+        if (voluntario == null) 
+            return NotFound();
+
+        return Ok(voluntario);
+    }
+
     [ProducesResponseType((201), Type = typeof(Voluntario))]
     [ProducesResponseType((400))]
     [ProducesResponseType((404))]
@@ -52,15 +65,43 @@ public class VoluntariosController : ControllerBase
         return Ok(inputVoluntarioModel);
     }
 
+    // [ProducesResponseType((201), Type = typeof(Imagem))]
+    // [ProducesResponseType((400))]
+    // [ProducesResponseType((404))]
+    // [HttpPost("{id}/foto")]
+    // public async Task<IActionResult> PostFotoAsync(int id, InputImagemModel inputImagemModel)
+    // {
+    //     var voluntario = await _service.PegarPorIdAsync(id);
+
+    //     if (voluntario == null)
+    //         return NotFound();
+
+    //     var imagem = new Imagem 
+    //     (
+    //     voluntario.Id,
+    //     inputImagemModel.Nome,
+    //     inputImagemModel.Conteudo
+    //     );
+
+    //     if (imagem == null)
+    //         return BadRequest();
+
+    //     voluntario.AdicionarFoto(imagem);
+
+    //     await _service.AdicionarFotoAsync(voluntario);
+
+    //     return NoContent();
+    // }
+
     [ProducesResponseType((200), Type = typeof(EditVoluntarioModel))]
     [ProducesResponseType((404))]
-    [HttpPut("")]
-    public async Task<IActionResult> PutAsync(EditVoluntarioModel editVoluntarioModel)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutAsync(int id,EditVoluntarioModel editVoluntarioModel)
     {
         if (editVoluntarioModel == null)
             return BadRequest();
 
-        var voluntarioEdit = await _service.EditarAsync(editVoluntarioModel);
+        var voluntarioEdit = await _service.EditarAsync(id, editVoluntarioModel);
 
         if (voluntarioEdit == null)
             return BadRequest();

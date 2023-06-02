@@ -14,43 +14,72 @@ public class OngRepository : GenericRepository<Ong>, IOngRepository
     {
         if (!string.IsNullOrWhiteSpace(nome))
         {
-            return _context.Ongs.FirstOrDefault(x => x.Nome.Contains(nome));
+            return await _context.Ongs.FirstOrDefaultAsync(x => x.Nome.ToUpper().Contains(nome.ToUpper()));
         }
         return null;
     }
 
-    public void AdicionarVaga(Ong ong)
+    public async Task<Ong> PegarPorEmailAsync(string email)
     {
-        try
-        {
-            _context.Entry(ong).State = EntityState.Modified;
-            _unitOfWork.Commit();
-        }
-        catch (Exception ex)
-        {
-            _unitOfWork.Rollback();
-        }
+        return await _context.Ongs.Include(x => x.Vagas).Include(x => x.Financeiros)
+        .FirstOrDefaultAsync(x => x.Email.ToUpper() == email.ToUpper());
     }
 
-    public void AdicionarFinanceiro(Ong ong)
-    {
-        try
-        {
-            _context.Entry(ong).State = EntityState.Modified;
-            _unitOfWork.Commit();
-        }
-        catch (Exception ex)
-        {
-            _unitOfWork.Rollback();
-        }
-    }
+    // public void AdicionarPropriedade(Ong ong)
+    // {
+    //     try
+    //     {
+    //         _context.Entry(ong).State = EntityState.Modified;
+    //         _unitOfWork.Commit();
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         _unitOfWork.Rollback();
+    //     }
+    // }
 
-    public override Ong PegarPorId(int id)
+    // public void AdicionarFinanceiro(Ong ong)
+    // {
+    //     try
+    //     {
+    //         _context.Entry(ong).State = EntityState.Modified;
+    //         _unitOfWork.Commit();
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         _unitOfWork.Rollback();
+    //     }
+    // }
+
+    // public void AdicionarFoto(Ong ong)
+    // {
+    //     try
+    //     {
+    //         _context.Entry(ong).State = EntityState.Modified;
+    //         _unitOfWork.Commit();
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         _unitOfWork.Rollback();
+    //     }
+    // }
+
+    public override async Task<Ong> PegarPorIdAsync(int id)
     {
-        return _dbSet
+        var ong = await _dbSet
         .Include(x => x.Vagas)
         .Include(x => x.Financeiros)
         .Include(x => x.Endereco)
-        .FirstOrDefault(x => x.Id == id);
+        // .Include(x => x.Imagem)
+        .FirstOrDefaultAsync(x => x.Id == id);
+        return ong;
+    }
+
+    public override async Task<List<Ong>> PegarTodosAsync()
+    {
+        return  _dbSet
+        .Include(x => x.Endereco)
+        .ToList()
+        .FindAll(x => x.Actived == true);
     }
 }

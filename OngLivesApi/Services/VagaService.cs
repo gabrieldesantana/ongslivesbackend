@@ -1,5 +1,5 @@
 using ONGLIVES.API.Entidades;
-using ONGLIVESAPI.Interfaces;
+using ONGLIVES.API.Interfaces;
 
 public class VagaService : IVagaService
 {
@@ -30,20 +30,20 @@ public class VagaService : IVagaService
         return vaga;
     }
 
-    public async Task<Vaga> EditarAsync(EditVagaModel editVagaModel)
+    public async Task<Vaga> EditarAsync(int id, EditVagaModel editVagaModel)
     {
-        var vagaEdit = _repository.PegarPorId(editVagaModel.Id);
+        var vagaEdit = await _repository.PegarPorIdAsync(id);
         
-        if (vagaEdit == null)
-            return null;
+        if (vagaEdit == null) return null;
 
-        vagaEdit.Id = editVagaModel.Id;
+        vagaEdit.Id = id;
         vagaEdit.Tipo = editVagaModel.Tipo;
         vagaEdit.Turno = editVagaModel.Turno;
         vagaEdit.Descricao = editVagaModel.Descricao;
         vagaEdit.Habilidade = editVagaModel.Habilidade;
         vagaEdit.DataInicio = editVagaModel.DataInicio;
         vagaEdit.DataFim = editVagaModel.DataFim;
+        vagaEdit.Disponivel = editVagaModel.Disponivel;
         
         vagaEdit = await _repository.EditarAsync(vagaEdit);
 
@@ -57,20 +57,18 @@ public class VagaService : IVagaService
 
     public async Task<Vaga> PegarPorIdAsync(int id)
     {
-        var vaga = _repository.PegarPorId(id);
+        var vaga = await _repository.PegarPorIdAsync(id);
 
-        if (vaga == null)
-            return null;
+        if (vaga == null) return null;
 
-        return _repository.PegarPorId(id);
+        return vaga;
     }
 
     public async Task<bool> DeletarAsync(int id)
     {
-        var vaga = _repository.PegarPorId(id);
+        var vaga = await _repository.PegarPorIdAsync(id);
 
-        if (vaga == null)
-            return false;
+        if (vaga == null) return false;
             
         await _repository.DeletarAsync(id);
         return true;

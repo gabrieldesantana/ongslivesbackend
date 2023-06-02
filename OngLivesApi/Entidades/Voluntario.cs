@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace ONGLIVES.API.Entidades
 {
+    [Table("TB_Voluntarios")]
     public class Voluntario : Base
     {
         public Voluntario()
@@ -16,9 +18,6 @@ namespace ONGLIVES.API.Entidades
             string? email,
             string? telefone,
             string? habilidade,
-            double avaliacao,
-            int horasVoluntaria,
-            int quantidadeExperiencias,
             Endereco? endereco
             )
         {
@@ -30,12 +29,18 @@ namespace ONGLIVES.API.Entidades
             Email = email;
             Telefone = telefone;
             Habilidade = habilidade;
-            Avaliacao = avaliacao;
-            HorasVoluntaria = horasVoluntaria;
-            QuantidadeExperiencias = quantidadeExperiencias;
+            Avaliacao = 5;
+            HorasVoluntaria = 0;
+            QuantidadeExperiencias = 0;
+            // Imagem = new Imagem();
             Endereco = endereco;
             CriadoEm = DateTime.Now;
         }
+
+        // public void AdicionarFoto(Imagem imagem)
+        // {
+        //     Imagem = imagem;
+        // }
         
         public string? Nome { get; set; }
         public string? CPF { get; set; }
@@ -48,6 +53,8 @@ namespace ONGLIVES.API.Entidades
         public double Avaliacao {get; set;}
         public int HorasVoluntaria { get; set; }
         public int QuantidadeExperiencias { get; set; }
+        // public int ImagemId { get; set; }
+        // public Imagem Imagem { get; set; }
         public Endereco? Endereco { get; set; }
         [JsonIgnore]
         public DateTime CriadoEm { get; set; }

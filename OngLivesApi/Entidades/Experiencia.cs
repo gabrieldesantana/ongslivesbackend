@@ -1,7 +1,9 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace ONGLIVES.API.Entidades
 {
+    [Table("TB_Experiencias")]
     public class Experiencia : Base
     {
         public Experiencia()
@@ -12,6 +14,7 @@ namespace ONGLIVES.API.Entidades
             string? nomeOng,
             string? projetoEnvolvido,
             string? opiniao,
+            int nota,
             DateTime dataExperienciaInicio,
             DateTime dataExperienciaFim)
         {
@@ -19,6 +22,7 @@ namespace ONGLIVES.API.Entidades
             NomeOng = nomeOng;
             ProjetoEnvolvido = projetoEnvolvido;
             Opiniao = opiniao;
+            Nota = nota;
             DataPostagem = DateTime.Now;
             DataExperienciaInicio = dataExperienciaInicio;
             DataExperienciaFim = dataExperienciaFim;
@@ -35,6 +39,7 @@ namespace ONGLIVES.API.Entidades
         public string? NomeOng { get; set; }
         public string? ProjetoEnvolvido { get; set; }
         public string? Opiniao { get; set; }
+        public int Nota { get; set; }
         public DateTime DataPostagem { get; set; }
         public DateTime DataExperienciaInicio{ get; set; }
         public DateTime DataExperienciaFim { get; set; }

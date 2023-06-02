@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using ONGLIVES.API.Persistence.Context;
-using ONGLIVESAPI.Interfaces;
+using ONGLIVES.API.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 

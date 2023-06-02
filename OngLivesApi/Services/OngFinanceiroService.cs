@@ -1,4 +1,5 @@
-using ONGLIVESAPI.Interfaces;
+using ONGLIVES.API.Entidades;
+using ONGLIVES.API.Interfaces;
 
 public class OngFinanceiroService : IOngFinanceiroService
 {
@@ -8,14 +9,13 @@ public class OngFinanceiroService : IOngFinanceiroService
         _repository = repository;
     }
     
-    public async Task<OngFinanceiro> EditarAsync(EditOngFinanceiroModel ongFinanceiro)
+    public async Task<OngFinanceiro> EditarAsync(int id, EditOngFinanceiroModel ongFinanceiro)
     {
-        var ongFinanceiroEdit = _repository.PegarPorId(ongFinanceiro.Id);
+        var ongFinanceiroEdit = await _repository.PegarPorIdAsync(id);
 
-        if (ongFinanceiroEdit == null)
-            return null;
+        if (ongFinanceiroEdit == null) return null;
         
-        ongFinanceiroEdit.Id = ongFinanceiro.Id;
+        ongFinanceiroEdit.Id = id;
         ongFinanceiroEdit.IdOng = ongFinanceiro.IdOng;
         ongFinanceiroEdit.Tipo = ongFinanceiro.Tipo;
         ongFinanceiroEdit.Valor = ongFinanceiro.Valor;
@@ -33,20 +33,18 @@ public class OngFinanceiroService : IOngFinanceiroService
 
     public async Task<OngFinanceiro> PegarPorIdAsync(int id)
     {
-        var ongFinanceiro = _repository.PegarPorId(id);
+        var ongFinanceiro = await _repository.PegarPorIdAsync(id);
 
-        if (ongFinanceiro == null)
-            return null;
+        if (ongFinanceiro == null) return null;
 
-        return _repository.PegarPorId(id);
+        return ongFinanceiro;
     }
 
     public async Task<bool> DeletarAsync(int id)
     {
-        var ongFinanceiro = _repository.PegarPorId(id);
+        var ongFinanceiro = await _repository.PegarPorIdAsync(id);
 
-        if (ongFinanceiro == null)
-            return false;
+        if (ongFinanceiro == null) return false;
             
         await _repository.DeletarAsync(id);
         return true;
