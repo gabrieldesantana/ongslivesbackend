@@ -26,7 +26,8 @@ namespace ONGLIVES.API.Persistence.Context
             // optionsBuilder.UseSqlServer("Server=sv-gsgomes.database.windows.net;DataBase=DB_OngsLives;User Id=gsgomes;Password=Biel0707");
             
             //optionsBuilder.UseSqlServer("Server=GSGOMES-DESKTOP\\SQLEXPRESS;DataBase=DB_OngsLives;Integrated Security=SSPI;TrustServerCertificate=True");
-            optionsBuilder.UseSqlServer("Server=sv-ongslives.database.windows.net;DataBase=BD_OngsLives;User Id=ongslivesdba;Password=Ongs0707");
+            //optionsBuilder.UseSqlServer("Server=sv-ongslives.database.windows.net;DataBase=BD_OngsLives;User Id=ongslivesdba;Password=Ongs0707");
+            optionsBuilder.UseSqlServer("Server=sv-ongslives.database.windows.net;Initial Catalog=BD_ONGSLIVES;Persist Security Info=False;User ID=ongslivesdba;Password=Ongs0707;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
 
     }
