@@ -25,6 +25,6 @@ namespace ONGLIVES.API.Entidades
         public string? Nome { get; set; }
         public byte[]? Conteudo { get; set; }
         public DateTime CriadoEm { get; set; }
-        public bool Actived { get; set; }
+        // public bool Actived { get; set; }
     }
 }
